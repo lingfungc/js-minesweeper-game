@@ -1,3 +1,17 @@
+.grid {
+  height: 400px;
+  width: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: grey;
+}
+
+.grid div {
+  height: 40px;
+  width: 40px;
+}
+
+
 /* CSS classes you can use on your table td to display the relevant tile */
 td.unopened {
   background: url('img/unopened.svg');
