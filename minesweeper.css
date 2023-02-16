@@ -12,18 +12,20 @@
 .grid div {
   height: 40px;
   width: 40px;
+  background-position: center;
+  background-size: 95%;
+  background-repeat: no-repeat;
 }
 
 /* Single Grid Style */
 .unopened {
   background: url('img/unopened.svg');
-  background-size: 100%;
   cursor: pointer;
 }
 .opened {
   background: url('img/opened.svg');
 }
-.flagged {
+.flag {
   background: url('img/flag.svg');
 }
 .question {
@@ -31,9 +33,6 @@
 }
 .bomb {
   background: url('img/mine.png');
-  background-position: center;
-  background-size: 90%;
-  background-repeat: no-repeat;
 }
 .mine-neighbour-1 {
   background: url('img/1.svg');

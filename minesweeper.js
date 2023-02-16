@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let width = 10;
   let bombAmount = 20;
   let squares = [];
+  let isGameOver = false;
 
   // * Create a Board
   function createBoard() {
@@ -28,6 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
       square.classList.add(shuffledArray[i]);
       grid.appendChild(square);
       squares.push(square);
+
+      // Normal Click Event Listener
+      square.addEventListener("click", () => {
+        // Trigger the other click() function
+        click(square);
+      });
     }
 
     // * Add Numbers to Squares
@@ -105,4 +112,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   createBoard();
+
+  // Click on Square Function
+  function click(square) {
+    if (isGameOver) return;
+    if (
+      square.classList.contains("opened") ||
+      square.classList.contains("flagged")
+    )
+      return;
+
+    if (square.classList.contains("bomb")) {
+      // alert("Game Over");
+      console.log("Game Over");
+      isGameOver = true;
+    } else {
+      let totalBombs = square.getAttribute("data");
+      if (totalBombs != 0) {
+        square.classList.add(`mine-neighbour-${totalBombs}`);
+      }
+      square.classList.add("opened");
+    }
+  }
 });
