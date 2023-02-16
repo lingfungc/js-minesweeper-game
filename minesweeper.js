@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function createBoard() {
     // Get Shuffled Game Array with Random Bombs
     const bombsArray = Array(bombAmount).fill("bomb");
-    const emptyArray = Array(width * width - bombAmount).fill("valid");
+    const emptyArray = Array(width * width - bombAmount).fill("unopened");
 
     const gameArray = emptyArray.concat(bombsArray);
     // The { Math.random() - 0.5 } here is the compare function
@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < width * width; i++) {
       const square = document.createElement("div");
       square.setAttribute("id", i);
+      square.classList.add(shuffledArray[i]);
       grid.appendChild(square);
       squares.push(square);
     }

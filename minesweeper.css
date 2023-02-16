@@ -1,9 +1,11 @@
+/* Game Board */
 .grid {
   height: 400px;
   width: 400px;
   display: flex;
   flex-wrap: wrap;
   background-color: grey;
+  margin: 5rem auto 0rem;
 }
 
 .grid div {
@@ -11,58 +13,47 @@
   width: 40px;
 }
 
-
-/* CSS classes you can use on your table td to display the relevant tile */
-td.unopened {
+/* Single Grid Style */
+.unopened {
   background: url('img/unopened.svg');
+  background-size: 100%;
   cursor: pointer;
 }
-td.opened {
+.opened {
   background: url('img/opened.svg');
 }
-td.flagged {
+.flagged {
   background: url('img/flag.svg');
 }
-td.question {
+.question {
   background: url('img/question.svg');
 }
-td.mine {
+.bomb {
   background: url('img/mine.png');
+  background-position: center;
+  background-size: 95%;
 }
-td.mine-neighbour-1 {
+.mine-neighbour-1 {
   background: url('img/1.svg');
 }
-td.mine-neighbour-2 {
+.mine-neighbour-2 {
   background: url('img/2.svg');
 }
-td.mine-neighbour-3 {
+.mine-neighbour-3 {
   background: url('img/3.svg');
 }
-td.mine-neighbour-4 {
+.mine-neighbour-4 {
   background: url('img/4.svg');
 }
-td.mine-neighbour-5 {
+.mine-neighbour-5 {
   background: url('img/5.svg');
 }
-td.mine-neighbour-6 {
+.mine-neighbour-6 {
   background: url('img/6.svg');
 }
-td.mine-neighbour-7 {
+.mine-neighbour-7 {
   background: url('img/7.svg');
 }
-td.mine-neighbour-8 {
+.mine-neighbour-8 {
   background: url('img/8.svg');
-}
-
-/* Positioning the Minesweep table and make sure the cells are square */
-table #minesweeper {
-  margin: auto;
-  margin-top: 3em;
-  border: 1px solid #999;
-  border-collapse: collapse;
-}
-table #minesweeper td {
-  width: 24px;
-  height: 24px;
-  background-size: cover;
 }
