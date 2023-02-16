@@ -3,6 +3,7 @@
   height: 400px;
   width: 400px;
   display: flex;
+  /* When the children <div> have a greater width than 400px, then wrap those <div> into next line */
   flex-wrap: wrap;
   background-color: grey;
   margin: 5rem auto 0rem;
@@ -31,7 +32,8 @@
 .bomb {
   background: url('img/mine.png');
   background-position: center;
-  background-size: 95%;
+  background-size: 90%;
+  background-repeat: no-repeat;
 }
 .mine-neighbour-1 {
   background: url('img/1.svg');
