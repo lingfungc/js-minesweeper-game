@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // * Add Numbers to Squares
+    // * Set Up Game Board by Adding Numbers to Squares
     for (let i = 0; i < squares.length; i++) {
       // Total Number of Bomb around this Square
       let totalBombs = 0;
@@ -113,12 +113,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   createBoard();
 
-  // Click on Square Function
+  // * Click on Square Function
   function click(square) {
+    let currentId = square.id;
+
     if (isGameOver) return;
     if (
       square.classList.contains("opened") ||
-      square.classList.contains("flagged")
+      square.classList.contains("flag")
     )
       return;
 
@@ -130,8 +132,71 @@ document.addEventListener("DOMContentLoaded", () => {
       let totalBombs = square.getAttribute("data");
       if (totalBombs != 0) {
         square.classList.add(`mine-neighbour-${totalBombs}`);
+        // * Make Sure We Stop the Recursion when the Square Contains "totalBombs" Value instead of "empty" one
+        return;
       }
-      square.classList.add("opened");
+      checkSquare(square, currentId);
     }
+
+    square.classList.add("opened");
+  }
+
+  // * Check Neighboring Squares once Square is Clicked
+  function checkSquare(square, currentId) {
+    // In this game board, the index of squares on left edge are 0, 10, 20 ... 90
+    const isLeftEdge = currentId % width === 0;
+    // In this game board, the index of squares on right edge are 9, 19, 29 ... 99
+    const isRightEdge = currentId % width === width - 1;
+
+    setTimeout(() => {
+      // Access the West Square and Call the "click()" on this West Square
+      if (currentId > 0 && !isLeftEdge) {
+        const newId = squares[parseInt(currentId) - 1].id;
+        const newSquare = document.getElementById(newId);
+        click(newSquare);
+      }
+      // Access the East Square and Call the "click()" on this West Square
+      if (currentId < width * width - 1 && !isRightEdge) {
+        const newId = squares[parseInt(currentId) + 1].id;
+        const newSquare = document.getElementById(newId);
+        click(newSquare);
+      }
+      // Access the North Square and Call the "click()" on this West Square
+      if (currentId > width - 1) {
+        const newId = squares[parseInt(currentId) - width].id;
+        const newSquare = document.getElementById(newId);
+        click(newSquare);
+      }
+      // Access the South Square and Call the "click()" on this West Square
+      if (currentId < width * width - width) {
+        const newId = squares[parseInt(currentId) + width].id;
+        const newSquare = document.getElementById(newId);
+        click(newSquare);
+      }
+      // Access the North-West Square and Call the "click()" on this West Square
+      if (currentId > width - 1 && !isLeftEdge) {
+        const newId = squares[parseInt(currentId) - 1 - width].id;
+        const newSquare = document.getElementById(newId);
+        click(newSquare);
+      }
+      // Access the North-East Square and Call the "click()" on this West Square
+      if (currentId > width - 1 && !isRightEdge) {
+        const newId = squares[parseInt(currentId) + 1 - width].id;
+        const newSquare = document.getElementById(newId);
+        click(newSquare);
+      }
+      // Access the South-West Square and Call the "click()" on this West Square
+      if (currentId < width * width - width && !isLeftEdge) {
+        const newId = squares[parseInt(currentId) - 1 + width].id;
+        const newSquare = document.getElementById(newId);
+        click(newSquare);
+      }
+      // Access the South-East Square and Call the "click()" on this West Square
+      if (currentId < width * width - width && !isRightEdge) {
+        const newId = squares[parseInt(currentId) + 1 + width].id;
+        const newSquare = document.getElementById(newId);
+        click(newSquare);
+      }
+    }, 10);
   }
 });
