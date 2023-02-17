@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const grid = document.querySelector(".grid");
   let width = 10;
   let bombAmount = 20;
+  let flags = 0;
   let squares = [];
   let isGameOver = false;
 
@@ -15,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const bombsArray = Array(bombAmount).fill("bomb");
     const emptyArray = Array(width * width - bombAmount).fill("unopened");
     const gameArray = emptyArray.concat(bombsArray);
+    console.log(gameArray);
     // The { Math.random() - 0.5 } here is the compare function
     // The array elements are sorted according to the return value of the compare function
     // If the return value > 0, then sort "a" after "b"
@@ -35,6 +37,12 @@ document.addEventListener("DOMContentLoaded", () => {
         // Trigger the other click() function
         click(square);
       });
+
+      // The ".oncontextmenu" Event is Typically Triggered by a "right mouse click"
+      square.oncontextmenu = function (e) {
+        e.preventDefault();
+        addFlag(square);
+      };
     }
 
     // * Set Up Game Board by Adding Numbers to Squares
@@ -113,6 +121,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   createBoard();
 
+  // * Add Flag with Right Click
+  function addFlag(square) {
+    if (isGameOver) return;
+
+    if (!square.classList.contains("opened") && flags < bombAmount) {
+      if (!square.classList.contains("flag")) {
+        square.classList.add("flag");
+        flags++;
+        checkForWin();
+      } else {
+        square.classList.remove("flag");
+        flags--;
+      }
+    }
+  }
+
   // * Click on Square Function
   function click(square) {
     let currentId = square.id;
@@ -126,10 +150,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // When the Square is a "bomb"
     if (square.classList.contains("bomb")) {
-      console.log("Game Over");
-      // Stop the Game by Setting "isGameOver" to "true"
-      alert("Game Over");
-      isGameOver = true;
+      // Stop the Game
+      gameOver(square);
     } else {
       // Access the Square "totalBombs" Value
       let totalBombs = square.getAttribute("data");
@@ -206,5 +228,40 @@ document.addEventListener("DOMContentLoaded", () => {
         click(newSquare);
       }
     }, 10);
+  }
+
+  // * Game Over Function
+  function gameOver(square) {
+    alert("Boom! Game Over!");
+    console.log("Boom! Game Over!");
+    isGameOver = true;
+
+    // * Show All Bombs Location
+    squares.forEach((square) => {
+      if (square.classList.contains("bomb")) {
+        square.classList.add("bomb-show");
+        square.classList.remove("bomb");
+      }
+      square.style.cursor = "auto";
+    });
+  }
+
+  // * Check For Win
+  function checkForWin() {
+    let matches = 0;
+
+    for (let i = 0; i < squares.length; i++) {
+      if (
+        squares[i].classList.contains("flag") &&
+        squares[i].classList.contains("bomb")
+      ) {
+        matches++;
+      }
+      if (matches === bombAmount) {
+        alert("You Win");
+        console.log("Win!");
+        isGameOver = true;
+      }
+    }
   }
 });

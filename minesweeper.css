@@ -18,7 +18,7 @@
 }
 
 /* Single Grid Style */
-.unopened {
+.unopened, .bomb {
   background: url('img/unopened.svg');
   cursor: pointer;
 }
@@ -31,7 +31,7 @@
 .question {
   background: url('img/question.svg');
 }
-.bomb {
+.bomb-show {
   background: url('img/mine.png');
 }
 .mine-neighbour-1 {
