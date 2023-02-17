@@ -124,21 +124,29 @@ document.addEventListener("DOMContentLoaded", () => {
     )
       return;
 
+    // When the Square is a "bomb"
     if (square.classList.contains("bomb")) {
-      // alert("Game Over");
       console.log("Game Over");
+      // Stop the Game by Setting "isGameOver" to "true"
+      alert("Game Over");
       isGameOver = true;
     } else {
+      // Access the Square "totalBombs" Value
       let totalBombs = square.getAttribute("data");
+      // When the Square is a "mine-neighbor"
       if (totalBombs != 0) {
         square.classList.add(`mine-neighbour-${totalBombs}`);
-        // * Make Sure We Stop the Recursion when the Square Contains "totalBombs" Value instead of "empty" one
+        square.classList.remove("unopened");
+        // * Make Sure We Stop the Recursion when the Square is a "mine-neighbor"
         return;
       }
+      // When the Square is a "empty" Square, Run the Recursion
       checkSquare(square, currentId);
     }
 
+    // Update the "empty" Square Class List in Reverse Order
     square.classList.add("opened");
+    square.classList.remove("unopened");
   }
 
   // * Check Neighboring Squares once Square is Clicked
